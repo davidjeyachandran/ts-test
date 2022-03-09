@@ -10,6 +10,11 @@ type TResult = { [key: string]: string }
  */
 export const getArnieQuotes = async (urls: string[]): Promise<TResult[]> => {
 
+  if (urls.length === 0) {
+    // TODO - I'm not sure how we want to handle errors
+    throw new Error('Your request has been terminated. urls cannot be an empty array.')
+  }
+
   return await Promise.all(urls.map(async (item: string): Promise<TResult> => {
     const result = await httpGet(item)
     const msg = JSON.parse(result.body).message
